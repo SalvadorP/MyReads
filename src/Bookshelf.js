@@ -7,3 +7,5 @@ class Bookshelf extends Component {
         )
     }
 }
+
+export default Bookshelf
