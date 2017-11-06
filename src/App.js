@@ -26,10 +26,10 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    console.log("All books => ");
-    console.log(this.state.allBooks);
-    console.log("Reading => ");
-    console.log(this.state.books.reading);
+    // console.log("All books => ");
+    // console.log(this.state.allBooks);
+    // console.log("Reading => ");
+    // console.log(this.state.books.reading);
 
     return (
       <div className="app">
