@@ -5,7 +5,7 @@ class Book extends Component {
     changeBookStatus = (e) => {
         e.preventDefault();
         const statusObj = {
-            bookId: e.target.id,
+            bookId: this.props.book.id,
             newShelve: e.target.value,
             oldShelve: this.props.shelve
         };
@@ -14,7 +14,7 @@ class Book extends Component {
     
 
     render() {
-        const { book } = this.props;
+        const { book, shelve } = this.props;
         const bookCoverStyle = {
             width: 128, 
             height: 193, 
@@ -25,7 +25,7 @@ class Book extends Component {
                 <div className="book-top">
                     <div className="book-cover" style={bookCoverStyle}></div>
                     <div className="book-shelf-changer">
-                        <select onChange={this.changeBookStatus} name="bookStatus" id={book.id}>
+                        <select onChange={this.changeBookStatus} name="bookStatus" value={shelve}>
                             <option value="none" disabled>Move to...</option>
                             <option value="none">None</option>
                             <option value="currentlyReading">Currently Reading</option>
