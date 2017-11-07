@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import escapeRegExp from 'escape-string-regexp';
+// import escapeRegExp from 'escape-string-regexp';
 import Book from './Book';
 import sortBy from 'sort-by';
 import * as BooksAPI from './BooksAPI';
@@ -30,6 +30,10 @@ class SearchBooks extends Component {
 
     updateQuery = (query) => {
       this.setState({ query: query.trim() });
+      BooksAPI.search(query).then((allBooks) => {
+        this.setState({allBooks});
+      });
+      // Use the book api to search.
     }
 
     /**
@@ -52,11 +56,14 @@ class SearchBooks extends Component {
         const { query, allBooks } = this.state;
 
         let showingBooks = allBooks;
-        if (query) {
-          const match = new RegExp(escapeRegExp(query), 'i');
-          showingBooks = allBooks.filter((book) => match.test(book.title));
+        // if (query) {
+        //   const match = new RegExp(escapeRegExp(query), 'i');
+        //   showingBooks = allBooks.filter((book) => match.test(book.title));
+        // }
+        // showingBooks.sort(sortBy('title'));
+        if (showingBooks) {
+          console.log(showingBooks);
         }
-        showingBooks.sort(sortBy('title'));
 
         return (
             <div className="search-books">
