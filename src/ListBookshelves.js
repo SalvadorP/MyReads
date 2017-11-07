@@ -1,56 +1,21 @@
 import React, {Component} from 'react';
-// import Bookshelf from './Bookshelf';
 import Book from './Book';
-// import * as BooksAPI from './BooksAPI';
 
 class ListBookshelves extends Component {
 
-    // state = {
-    //     allBooks: [],
-    //     shelves: [
-    //         {
-    //             id: "currentlyReading",
-    //             books: [],
-    //             title: 'Currently Reading'
-    //         },
-    //         {
-    //             id: "wantToRead",
-    //             books: [],
-    //             title: 'Want to Read'
-    //         },    
-    //         {
-    //             id: "read",
-    //             books: [],
-    //             title: 'Read'
-    //         }                    
-    //     ]     
-    //   }
-
-    // componentDidMount() {
-    //     BooksAPI.getAll().then((allBooks) => {
-    //       this.setState({allBooks});
-    //       this.setState((previousState) => {
-    //         previousState.shelves[1].books = allBooks;
-    //         return previousState;
-    //       });
-    //     });        
-    // }
     onChangeBookStatus(statusObj) {
         this.props.onChangeStatus(statusObj);        
     }
 
     render() {
-        // console.log(this.state.allBooks);
         // <Bookshelf books={this.state.books.reading} title={"Currently Reading"} />
         // <Bookshelf books={this.state.books.wanted} title={"Want to Read"} />
         // <Bookshelf books={this.state.books.read} title={"Read"} />
-        const {shelves} = this.props;
-        // const shelves = this.state.shelves;
-        // console.log(shelves);
+        const {shelves, pageTitle} = this.props;
         return (
             <div className="list-books">
                 <div className="list-books-title">
-                <h1>MyReads</h1>
+                <h1>{pageTitle}</h1>
                 </div>                
                 <div className="list-books-content">                
                 {shelves.map((shelve,index) => (
