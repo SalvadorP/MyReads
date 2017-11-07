@@ -35,12 +35,13 @@ class BooksApp extends React.Component {
   componentDidMount() {
     const myreads = JSON.parse(localStorage.getItem('myreads') || '{}');
     if (myreads.shelves !== undefined && myreads.allBooks !== undefined) {
-      this.setState({shelves: myreads.shelves});
+      this.setState({shelves: myreads.shelves, allBooks: myreads.allBooks});
     } else {
       BooksAPI.getAll().then((allBooks) => {
         this.setState({allBooks});                 
-      });      
+      });     
     }
+    console.log(myreads);
   }
 
   /**
@@ -63,7 +64,7 @@ class BooksApp extends React.Component {
       this.setState({shelves});
       localStorage.setItem('myreads', JSON.stringify(this.state)); 
     }
-}
+  }
 
   render() {
     const pageTitle="My Reads";
@@ -75,7 +76,7 @@ class BooksApp extends React.Component {
         )} />  
             
         <Route path="/search" render={({history}) => (
-            <SearchBook allBooks={this.state.allBooks} />
+            <SearchBook onChangeStatus={(statusObj) => {this.onChangeStatus(statusObj)}} />
         )}/>
         <div className="open-search">
             <Link to="/search" onClick={() => this.setState({ showSearchPage: true })}>Add a book</Link>
