@@ -32,6 +32,10 @@ class SearchBooks extends Component {
       this.setState({ query: query.trim() });
     }
 
+    /**
+     * Returns the shelve where is the book.
+     * @param {*} book 
+     */
     whichShelve(book) {
       const bookShelve = this.state.shelves.map((shelve, index) => {
         const found = shelve.books.filter((b) => b.id === book.id);

@@ -28,10 +28,6 @@ class BooksApp extends React.Component {
     ]     
   }
 
-  getInitialState() {
-    return JSON.parse(localStorage.getItem('myreads') || '{}');
-  }
-
   componentDidMount() {
     const myreads = JSON.parse(localStorage.getItem('myreads') || '{}');
     if (myreads.shelves !== undefined && myreads.allBooks !== undefined) {
@@ -78,7 +74,7 @@ class BooksApp extends React.Component {
             <SearchBook onChangeStatus={(statusObj) => {this.onChangeStatus(statusObj)}} />
         )}/>
         <div className="open-search">
-            <Link to="/search" onClick={() => this.setState({ showSearchPage: true })}>Add a book</Link>
+            <Link to="/search">Add a book</Link>
         </div>
        
       </div>
