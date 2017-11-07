@@ -1,11 +1,18 @@
 import React, {Component} from 'react';
-import BookshelfChanger from './BookshelfChanger';
 
 class Book extends Component {
-    changeStatus(status) {
-        console.log("On book change status = ");
-        console.log(status);
-    }
+  
+    changeBookStatus = (e) => {
+        e.preventDefault();
+        const statusObj = {
+            bookId: e.target.id,
+            newShelve: e.target.value,
+            oldShelve: this.props.shelve
+        };
+        this.props.onChangeBookStatus(statusObj);
+    };
+    
+
     render() {
         const { book } = this.props;
         const bookCoverStyle = {
@@ -17,9 +24,15 @@ class Book extends Component {
             <div className="book">
                 <div className="book-top">
                     <div className="book-cover" style={bookCoverStyle}></div>
-                    <BookshelfChanger bookId={book.id} onChangeState={(status) => {
-                        this.changeStatus(status);                        
-                    }} />
+                    <div className="book-shelf-changer">
+                        <select onChange={this.changeBookStatus} name="bookStatus" id={book.id}>
+                            <option value="none" disabled>Move to...</option>
+                            <option value="none">None</option>
+                            <option value="currentlyReading">Currently Reading</option>
+                            <option value="wantToRead">Want to Read</option>
+                            <option value="read">Read</option>                            
+                        </select>
+                    </div>
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors.map(author => (author + ", " ))}</div>
