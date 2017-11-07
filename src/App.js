@@ -41,7 +41,6 @@ class BooksApp extends React.Component {
         this.setState({allBooks});                 
       });     
     }
-    console.log(myreads);
   }
 
   /**

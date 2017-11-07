@@ -29,7 +29,6 @@ class SearchBooks extends Component {
     }
 
     updateQuery = (query) => {
-      console.log("Update Query = " + query);
       this.setState({ query: query.trim() });
     }
 
@@ -54,8 +53,6 @@ class SearchBooks extends Component {
           showingBooks = allBooks.filter((book) => match.test(book.title));
         }
         showingBooks.sort(sortBy('title'));
-        // console.log(allBooks);
-        // console.log(showingBooks);
 
         return (
             <div className="search-books">
