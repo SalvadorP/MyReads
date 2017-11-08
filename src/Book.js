@@ -5,7 +5,7 @@ class Book extends Component {
     changeBookStatus = (e) => {
         e.preventDefault();
         const statusObj = {
-            bookId: this.props.book.id,
+            book: this.props.book,
             newShelve: e.target.value,
             oldShelve: this.props.shelve
         };

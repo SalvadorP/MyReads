@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 // import escapeRegExp from 'escape-string-regexp';
 import Book from './Book';
-import sortBy from 'sort-by';
+// import sortBy from 'sort-by';
 import * as BooksAPI from './BooksAPI';
 
 class SearchBooks extends Component {
@@ -18,6 +18,10 @@ class SearchBooks extends Component {
       }
     }
 
+    componentDidUpdate(_, previousState) {
+      // console.log("Search component did update");     
+    }
+
     state = {
       query: '',
       shelves: [],
@@ -25,7 +29,12 @@ class SearchBooks extends Component {
     }
 
     onChangeBookStatus(statusObj) {
-      this.props.onChangeStatus(statusObj);        
+      // Bubble the change to the App function.
+      this.props.onChangeStatus(statusObj);    
+      
+      // Update the allBooks list.
+      const allBooks = this.state.allBooks.filter((b) => b.id !== statusObj.book.id);
+      this.setState({allBooks});
     }
 
     updateQuery = (query) => {
@@ -33,7 +42,6 @@ class SearchBooks extends Component {
       BooksAPI.search(query).then((allBooks) => {
         this.setState({allBooks});
       });
-      // Use the book api to search.
     }
 
     /**
@@ -52,19 +60,26 @@ class SearchBooks extends Component {
       return bookShelve;
     }
 
+    isOnShelve(book) {
+      const bookInShelve = this.state.shelves.map((shelve, index) => {
+        const booksFound = shelve.books.filter((b) => b.id === book.id);        
+        let found = true;
+        if (booksFound.length === 0) {
+          found = false;
+        }
+        return found;
+      }).filter(Boolean);
+      if (bookInShelve.length > 0) {
+        return true;
+      }
+      return false;
+    }
+
     render() {
         const { query, allBooks } = this.state;
 
-        let showingBooks = allBooks;
-        // if (query) {
-        //   const match = new RegExp(escapeRegExp(query), 'i');
-        //   showingBooks = allBooks.filter((book) => match.test(book.title));
-        // }
-        // showingBooks.sort(sortBy('title'));
-        if (showingBooks) {
-          console.log(showingBooks);
-        }
-
+        let showingBooks = allBooks.filter((b) => true !== this.isOnShelve(b));
+        
         return (
             <div className="search-books">
             <div className="search-books-bar">
