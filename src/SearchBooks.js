@@ -3,6 +3,8 @@ import {withRouter} from "react-router-dom";
 // import escapeRegExp from 'escape-string-regexp';
 import Book from './Book';
 // import sortBy from 'sort-by';
+// import sleep from "then-sleep";
+
 import * as BooksAPI from './BooksAPI';
 
 class SearchBooks extends Component {
@@ -20,6 +22,9 @@ class SearchBooks extends Component {
 
     componentDidUpdate(_, previousState) {
       // console.log("Search component did update");     
+      // BooksAPI.search(this.state.query).then((allBooks) => {
+      //   this.setState({allBooks});
+      // });
     }
 
     state = {
@@ -39,9 +44,11 @@ class SearchBooks extends Component {
 
     updateQuery = (query) => {
       this.setState({ query: query.trim() });
-      BooksAPI.search(query).then((allBooks) => {
-        this.setState({allBooks});
-      });
+      if (query) {
+        BooksAPI.search(query).then((allBooks) => {
+          allBooks.error ? this.setState({allBooks: []}) : this.setState({allBooks});
+        });
+      }      
     }
 
     /**
@@ -96,6 +103,7 @@ class SearchBooks extends Component {
               </div>
             </div>
             <div className="search-books-results">
+            {showingBooks.length > 0 && (
               <ol className="books-grid">
               {showingBooks.map(book => (
                 <li key={book.id}>
@@ -103,6 +111,7 @@ class SearchBooks extends Component {
                 </li>
               ))}
               </ol>
+            )}
             </div>
           </div>
         )
