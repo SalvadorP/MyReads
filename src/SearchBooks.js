@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 // import escapeRegExp from 'escape-string-regexp';
-import Book from './Book';
 // import sortBy from 'sort-by';
-// import sleep from "then-sleep";
+import Book from './Book';
 
 import * as BooksAPI from './BooksAPI';
 
@@ -21,10 +20,7 @@ class SearchBooks extends Component {
     }
 
     componentDidUpdate(_, previousState) {
-      // console.log("Search component did update");     
-      // BooksAPI.search(this.state.query).then((allBooks) => {
-      //   this.setState({allBooks});
-      // });
+      // console.log("Search component did update");           
     }
 
     state = {
@@ -84,14 +80,6 @@ class SearchBooks extends Component {
               <a className="close-search" onClick={() => (this.props.history.push("/"))}>Close</a>
 
               <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
                 <input 
                   type="text" 
                   placeholder="Search by title or author" 

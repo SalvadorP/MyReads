@@ -15,10 +15,13 @@ class Book extends Component {
 
     render() {
         const { book, shelve } = this.props;
+        const thumbnail = book.imageLinks !== undefined ? book.imageLinks.thumbnail : '';
+        const title = book.title !== undefined ? book.title : '';
+        const authors = book.authors !== undefined ? book.authors : [];
         const bookCoverStyle = {
             width: 128, 
             height: 193, 
-            backgroundImage: 'url(' + book.imageLinks.thumbnail + ')'          
+            backgroundImage: 'url(' + thumbnail + ')'          
         }
         return (
             <div className="book">
@@ -34,8 +37,8 @@ class Book extends Component {
                         </select>
                     </div>
                 </div>
-                <div className="book-title">{book.title}</div>
-                <div className="book-authors">{book.authors.map(author => (author + ", " ))}</div>
+                <div className="book-title">{title}</div>
+                <div className="book-authors">{authors.map(author => (author + ", " ))}</div>
             </div>            
         )
     }
