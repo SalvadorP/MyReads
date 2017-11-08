@@ -44,15 +44,13 @@ class BooksApp extends React.Component {
    * @param {*} statusObj 
    */
   onChangeStatus(statusObj) {
-    if (statusObj.oldShelve !== statusObj.newShelve && statusObj.newShelve !== 'none') {
-      const oldShelves = this.state.shelves;   
-      let book = this.state.allBooks.filter((book) => book.id === statusObj.bookId)[0];      
-      const shelves = oldShelves.map((shelve, index) => {
+    if (statusObj.oldShelve !== statusObj.newShelve) {
+      const shelves = this.state.shelves.map((shelve, index) => {
         if (shelve.id === statusObj.newShelve) {
-          shelve.books.push(book);
+          shelve.books.push(statusObj.book);
         }
         if (shelve.id === statusObj.oldShelve) {
-          shelve.books = shelve.books.filter((b) => b.id !== statusObj.bookId);
+          shelve.books = shelve.books.filter((b) => b.id !== statusObj.book.id);
         }
         return shelve;
       });
