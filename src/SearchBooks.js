@@ -47,39 +47,30 @@ class SearchBooks extends Component {
     /**
      * Returns the shelve where is the book.
      * @param {*} book 
+     * @returns String
      */
     whichShelve(book) {
       const bookShelve = this.state.shelves.map((shelve, index) => {
         const found = shelve.books.filter((b) => b.id === book.id);
-        let bs = false;
-        if (found.length > 0) {
-          bs = shelve.id;
-        }
-        return bs;
+        return found.length > 0 ? shelve.id : false;
       }).find(Boolean);      
       return bookShelve;
     }
 
+    /**
+     * Returns if a book is on a shelve.
+     * @param {*} book 
+     * @returns Boolean
+     */
     isOnShelve(book) {
-      const bookInShelve = this.state.shelves.map((shelve, index) => {
-        const booksFound = shelve.books.filter((b) => b.id === book.id);        
-        let found = true;
-        if (booksFound.length === 0) {
-          found = false;
-        }
-        return found;
-      }).filter(Boolean);
-      if (bookInShelve.length > 0) {
-        return true;
-      }
-      return false;
+      return this.whichShelve(book) === undefined ? false : true;  
     }
 
     render() {
         const { query, allBooks } = this.state;
 
         let showingBooks = allBooks.filter((b) => true !== this.isOnShelve(b));
-        
+               
         return (
             <div className="search-books">
             <div className="search-books-bar">
