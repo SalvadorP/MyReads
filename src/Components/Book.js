@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 class Book extends Component {
-  
+
     changeBookStatus = (e) => {
         e.preventDefault();
         const statusObj = {
@@ -11,7 +11,7 @@ class Book extends Component {
         };
         this.props.onChangeBookStatus(statusObj);
     };
-    
+
 
     render() {
         const { book, shelve } = this.props;
@@ -19,9 +19,9 @@ class Book extends Component {
         const title = book.title !== undefined ? book.title : '';
         const authors = book.authors !== undefined ? book.authors : [];
         const bookCoverStyle = {
-            width: 128, 
-            height: 193, 
-            backgroundImage: 'url(' + thumbnail + ')'          
+            width: 128,
+            height: 193,
+            backgroundImage: 'url(' + thumbnail + ')'
         }
         return (
             <div className="book">
@@ -33,13 +33,13 @@ class Book extends Component {
                             <option value="none">None</option>
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>
-                            <option value="read">Read</option>                            
+                            <option value="read">Read</option>
                         </select>
                     </div>
                 </div>
                 <div className="book-title">{title}</div>
                 <div className="book-authors">{authors.map(author => (author + ", " ))}</div>
-            </div>            
+            </div>
         )
     }
 }
