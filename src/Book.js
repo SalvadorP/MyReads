@@ -15,7 +15,7 @@ class Book extends Component {
 
     render() {
         const { book, shelve } = this.props;
-        const thumbnail = book.imageLinks !== undefined ? book.imageLinks.thumbnail : '';
+        const thumbnail = book.imageLinks !== undefined ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193?text=No%20Cover';
         const title = book.title !== undefined ? book.title : '';
         const authors = book.authors !== undefined ? book.authors : [];
         const bookCoverStyle = {
