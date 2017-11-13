@@ -26,7 +26,7 @@ class SearchBooks extends Component {
 
     onChangeBookStatus(statusObj) {
       // Bubble the change to the App function.
-      this.props.onChangeStatus(statusObj);
+      this.props.onChangeBookStatus(statusObj);
 
       // Update the allBooks list.
       const allBooks = this.state.allBooks.filter((b) => b.id !== statusObj.book.id);

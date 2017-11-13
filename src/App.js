@@ -44,7 +44,7 @@ class BooksApp extends React.Component {
    * Removes the book from the shelve where it was and puts it on the new one, updating the state.
    * @param {*} statusObj
    */
-  onChangeStatus(statusObj) {
+  onChangeBookStatus(statusObj) {
     if (statusObj.oldShelve !== statusObj.newShelve) {
       const shelves = this.state.shelves.map((shelve, index) => {
         if (shelve.id === statusObj.newShelve) {
@@ -66,11 +66,11 @@ class BooksApp extends React.Component {
       <div className="app">
         <Switch>
           <Route exact path="/" render={() => (
-              <ListBookshelves pageTitle={pageTitle} shelves={this.state.shelves} onChangeStatus={(statusObj) => {this.onChangeStatus(statusObj)}} />
+              <ListBookshelves pageTitle={pageTitle} shelves={this.state.shelves} onChangeBookStatus={(statusObj) => {this.onChangeBookStatus(statusObj)}} />
           )} />
 
           <Route path="/search" render={({history}) => (
-              <SearchBook onChangeStatus={(statusObj) => {this.onChangeStatus(statusObj)}} />
+              <SearchBook onChangeBookStatus={(statusObj) => {this.onChangeBookStatus(statusObj)}} />
           )}/>          
           <Route component={NoMatch} />
         </Switch>

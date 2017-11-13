@@ -4,7 +4,7 @@ import Bookshelf from './Bookshelf';
 class ListBookshelves extends Component {
 
     onChangeBookStatus(statusObj) {
-        this.props.onChangeStatus(statusObj);
+        this.props.onChangeBookStatus(statusObj);
     }
 
     render() {

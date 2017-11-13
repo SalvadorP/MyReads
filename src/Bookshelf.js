@@ -4,7 +4,7 @@ import Book from './Book';
 
 class Bookshelf extends Component {
 
-    onChangeBookshelfStatus(statusObj) {
+    onChangeBookStatus(statusObj) {
         this.props.onChangeBookStatus(statusObj);
     }
 
@@ -17,7 +17,7 @@ class Bookshelf extends Component {
                     <ol className="books-grid">
                     { shelve.books.map(book => (
                         <li key={book.id}>
-                            <Book book={book} shelve={shelve.id} onChangeBookshelfStatus={(statusObj) => {this.onChangeBookshelfStatus(statusObj)}} />
+                            <Book book={book} shelve={shelve.id} onChangeBookStatus={(statusObj) => {this.onChangeBookStatus(statusObj)}} />
                         </li>
                     ))}
                     </ol>
