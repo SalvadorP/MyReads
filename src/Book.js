@@ -9,7 +9,7 @@ class Book extends Component {
             newShelve: e.target.value,
             oldShelve: this.props.shelve
         };
-        this.props.onChangeBookStatus(statusObj);
+        this.props.onChangeBookshelfStatus(statusObj);
     };
     
 
