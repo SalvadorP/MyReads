@@ -1,4 +1,4 @@
-//import _ from "lodash";
+import {debounce} from "lodash";
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 import Book from './Book';
@@ -37,11 +37,18 @@ class SearchBooks extends Component {
       // TODO: Think about debouncing this function.
       this.setState({ query: query });
       if (query) {
-        BooksAPI.search(query).then((allBooks) => {
-          allBooks.error ? this.setState({allBooks: []}) : this.setState({allBooks});
-        });
+        this.doSearch();
+        // BooksAPI.search(query).then((allBooks) => {
+        //   allBooks.error ? this.setState({allBooks: []}) : this.setState({allBooks});
+        // });
       }
     }
+
+    doSearch = debounce(() => {
+      BooksAPI.search(this.state.query).then((allBooks) => {
+        allBooks.error ? this.setState({allBooks: []}) : this.setState({allBooks});
+      });
+    }, 300);
    
     /**
      * Returns the shelve where is the book.
