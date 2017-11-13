@@ -1,9 +1,8 @@
+import {debounce} from "lodash";
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-// import escapeRegExp from 'escape-string-regexp';
-// import sortBy from 'sort-by';
 import Book from './Book';
-
+// import { Debounce, Throttle } from 'react-throttle';
 import * as BooksAPI from './BooksAPI';
 
 class SearchBooks extends Component {
@@ -14,13 +13,9 @@ class SearchBooks extends Component {
         this.setState({shelves: myreads.shelves, allBooks: myreads.allBooks});
       } else {
         BooksAPI.getAll().then((allBooks) => {
-          this.setState({allBooks});                 
-        });      
+          this.setState({allBooks});
+        });
       }
-    }
-
-    componentDidUpdate(_, previousState) {
-      // console.log("Search component did update");           
     }
 
     state = {
@@ -31,63 +26,67 @@ class SearchBooks extends Component {
 
     onChangeBookStatus(statusObj) {
       // Bubble the change to the App function.
-      this.props.onChangeStatus(statusObj);    
-      
+      this.props.onChangeBookStatus(statusObj);
+
       // Update the allBooks list.
       const allBooks = this.state.allBooks.filter((b) => b.id !== statusObj.book.id);
       this.setState({allBooks});
     }
 
     updateQuery = (query) => {
-      this.setState({ query: query.trim() });
+      // TODO: Think about debouncing this function.
+      this.setState({ query: query });
       if (query) {
-        BooksAPI.search(query).then((allBooks) => {
-          allBooks.error ? this.setState({allBooks: []}) : this.setState({allBooks});
-        });
-      }      
+        this.doSearch();
+      }
     }
 
+    doSearch = debounce(() => {
+      BooksAPI.search(this.state.query).then((allBooks) => {
+        allBooks.error ? this.setState({allBooks: []}) : this.setState({allBooks});
+      });
+    }, 300);
+   
     /**
      * Returns the shelve where is the book.
-     * @param {*} book 
+     * @param {*} book
      * @returns String
      */
     whichShelve(book) {
       const bookShelve = this.state.shelves.map((shelve, index) => {
         const found = shelve.books.filter((b) => b.id === book.id);
         return found.length > 0 ? shelve.id : false;
-      }).find(Boolean);      
+      }).find(Boolean);
       return bookShelve;
     }
 
     /**
      * Returns if a book is on a shelve.
-     * @param {*} book 
+     * @param {*} book
      * @returns Boolean
      */
     isOnShelve(book) {
-      return this.whichShelve(book) === undefined ? false : true;  
+      return this.whichShelve(book) === undefined ? false : true;
     }
 
     render() {
         const { query, allBooks } = this.state;
 
         let showingBooks = allBooks.filter((b) => true !== this.isOnShelve(b));
-               
+        // onChange={(event) => _.debounce(this.updateQuery(event.target.value), 500, false)}
         return (
             <div className="search-books">
             <div className="search-books-bar">
               <a className="close-search" onClick={() => (this.props.history.push("/"))}>Close</a>
 
               <div className="search-books-input-wrapper">
-                <input 
-                  type="text" 
-                  placeholder="Search by title or author" 
-                  name="search" 
-                  value={query} 
-                  onChange={(event) => this.updateQuery(event.target.value)}
-                />
-
+                  <input
+                    type="text"
+                    placeholder="Search by title or author"
+                    name="search"
+                    value={query}
+                    onChange={(event) => (this.updateQuery(event.target.value))} 
+                  />
               </div>
             </div>
             <div className="search-books-results">
